@@ -70,7 +70,6 @@ export function AuthForm( props: any ){
 // Styling of component, transfers to pages where component is imported
 const styles = StyleSheet.create({
     container:{
-
         marginTop: 100,
         marginHorizontal: 20,
         backgroundColor: "#f7efd7",

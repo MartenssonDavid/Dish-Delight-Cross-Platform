@@ -2,9 +2,11 @@ import { SafeAreaView, Text, Pressable, View, StyleSheet, StatusBar, TextInput} 
 import { Link } from 'expo-router'
 import { AuthForm } from '@/components/AuthForm'
 import { AuthContext } from '@/context/authContext'
-import { createUserWithEmailAndPassword, Auth} from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
 import { useContext, useState } from 'react'
 import { useRouter } from 'expo-router'
+import { ErrorMessage } from "@/components/ErrorMessage"
+
 
 // Sign up/home
 export default function SignUp( props : any){
@@ -22,14 +24,32 @@ export default function SignUp( props : any){
         .catch( (error) => {        
             setError(error.code)
         })
+
+        // If user already logged in, redirect to home
+        onAuthStateChanged( auth, ( user ) => {
+            if( user ) {
+
+                router.replace('/home')
+            }
+            else {
+            }
+        })
+    
     }
     return(
         <View>
             <AuthForm title = "Sign up" action = { createAccount } actionText="Sign up" />
-            <Link href= '/login'>
-                <Text> Already have an account? Go to Login</Text>
+            <Link href= {'/login'}>
+                <Text style = {styles.text}> Already have an account? Go to Login</Text>
             </Link>
+            <ErrorMessage error = {error}/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    text:{
+        textAlign: "center"
+    }
+})
 

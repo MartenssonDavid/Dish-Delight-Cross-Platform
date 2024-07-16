@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useContext, useState } from 'react'
 import { AuthContext } from '@/context/authContext'
 import { useRouter } from 'expo-router'
+import { ErrorMessage } from '@/components/ErrorMessage'
 
 // Home page/ login
 export default function Login( props : any ){
@@ -25,9 +26,10 @@ export default function Login( props : any ){
     return(
         <View>
             <AuthForm title="Sign in using account details" actionText="Login" action={SignIn}/>
-            <Link href={'/'}>
-                <Text> Go to sign up </Text>
-            </Link>
-            </View>
+                <Link href={'/'}>
+                    <Text> Go to sign up </Text>
+                </Link>
+                <ErrorMessage error = {error}/>
+        </View>
     )
 }   
