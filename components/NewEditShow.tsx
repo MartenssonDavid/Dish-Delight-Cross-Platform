@@ -1,43 +1,41 @@
-import { View, Text, TextInput, StyleSheet, Image, Pressable} from 'react-native'
+import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native'
 import { useState, useEffect } from 'react'
 
-export function NewEditShow(props:any){
+export function NewEditShow(props: any) {
 
-    return(
-        <View style = {styles.container}>
-
+    return (
+        <View style={styles.container}>
             <Text style={styles.title}> {props.recipeName} </Text>
-            <Image style={styles.image}/>
+            <Image style={styles.image} />
             <Text style={styles.title}> {props.ingredients}</Text>
-            <TextInput style = {styles.textBox} multiline></TextInput>
+            <TextInput style={styles.textBox} multiline></TextInput>
             <Text style={styles.title}> {props.steps}</Text>
-            <TextInput style = {styles.textBox} multiline></TextInput>
-
+            <TextInput style={styles.textBox} multiline></TextInput>
         </View>
     )
 }
 
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         alignItems: "center",
         justifyContent: 'center',
         marginVertical: 20,
+        borderRadius: 10,
+        backgroundColor: "grey",
+        paddingVertical: 20,
         borderStyle: "solid",
         borderColor: "black",
         borderWidth: 2,
-        borderRadius: 10,
-        backgroundColor: "grey",
-        paddingVertical: 20
     },
-    title:{
+    title: {
         fontWeight: "bold",
         fontSize: 14,
         textAlign: "center",
         marginVertical: 10,
     },
-    textBox:{
+    textBox: {
         flex: 1,
         borderStyle: "solid",
         borderWidth: 2,
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
         width: '80%'
 
     },
-    image:{
+    image: {
         width: 150,
         height: 150,
         borderStyle: "solid",
@@ -55,5 +53,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
 
 
-    }
+    },
+
 })

@@ -1,66 +1,66 @@
-import { View, Text, TextInput, StyleSheet, Pressable} from 'react-native'
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
 import { useState, useEffect } from 'react'
 
 // Export of Authform since will be same for login and sign up
-export function AuthForm( props: any ){
+export function AuthForm(props: any) {
 
     // Hold value of email when text is changed in input, init as empty string
     const [email, setEmail] = useState(' ')
 
     // Same as above but for password
     const [password, setPassword] = useState(' ')
-    
+
     // Check if email and password is valid
     const [validEmail, setValidEmail] = useState(false)
     const [validPassword, setValidPassword] = useState(false)
 
     // Check for content in email
-    useEffect( () => {
+    useEffect(() => {
         // Simple check for valid email
-        if( email.indexOf('@') > 0 && email.length >= 7){
+        if (email.indexOf('@') > 0 && email.length >= 7) {
             setValidEmail(true)
-        }else{
+        } else {
             setValidEmail(false)
         }
-    },[email])
+    }, [email])
 
     // Check for content in password
-    useEffect( () => {
+    useEffect(() => {
         // Check if password is valid
-        if( password.length >= 5){
+        if (password.length >= 5) {
             setValidPassword(true)
-        }else{
+        } else {
             setValidPassword(false)
         }
-    },[password])
+    }, [password])
 
-    return(
+    return (
         <View style={styles.container}>
-            <Text 
-            style={styles.title}> 
-            {props.title} 
+            <Text
+                style={styles.title}>
+                {props.title}
             </Text>
-            
-            <Text style = { styles.label }> Email </Text>
 
-            <TextInput 
-                style={styles.input} 
-                onChangeText={ (text) => setEmail(text)}>
+            <Text style={styles.label}> Email </Text>
+
+            <TextInput
+                style={styles.input}
+                onChangeText={(text) => setEmail(text)}>
             </TextInput>
 
-            <Text style = { styles.label}> Password </Text>
+            <Text style={styles.label}> Password </Text>
 
-            <TextInput 
-                style={styles.input} 
-                secureTextEntry={true} 
-                onChangeText={ (text) => setPassword(text)}>
+            <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}>
             </TextInput>
 
-            <Pressable 
-                style = {styles.button}
-                onPress={ () => props.action(email,password)}
+            <Pressable
+                style={styles.button}
+                onPress={() => props.action(email, password)}
             >
-                    <Text style = {styles.buttonText}> {props.actionText} </Text>
+                <Text style={styles.buttonText}> {props.actionText} </Text>
             </Pressable>
         </View>
     )
@@ -69,14 +69,14 @@ export function AuthForm( props: any ){
 
 // Styling of component, transfers to pages where component is imported
 const styles = StyleSheet.create({
-    container:{
+    container: {
         marginTop: 100,
         marginHorizontal: 20,
         backgroundColor: "#f7efd7",
         padding: 20,
         borderRadius: 10
     },
-    input:{
+    input: {
         borderColor: "#c9c9c9",
         borderWidth: 2,
         borderStyle: "solid",
@@ -85,15 +85,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#efefef",
         borderRadius: 10,
     },
-    title:{
+    title: {
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: "center",
     },
-    label:{
+    label: {
         fontSize: 14,
     },
-    button:{
+    button: {
         backgroundColor: "grey",
         borderRadius: 4,
     },

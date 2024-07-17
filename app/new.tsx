@@ -1,27 +1,45 @@
 import { NewEditShow } from "@/components/NewEditShow"
 import { View, Text, StyleSheet, Pressable } from "react-native"
+import { AuthContext } from "@/context/authContext"
+import { DBContext } from "@/context/DBcontext"
+import { useContext } from "react"
+import { collection, addDoc} from "firebase/firestore"
+import { useRouter } from "expo-router"
 
-export default function New(props : any){
+export default function New(props: any) {
+    const router = useRouter()
+    // Auth context, get current user
+    const auth = useContext(AuthContext)
+    // Databse
+    const db = useContext(DBContext)
+    // Add data to db, async since await
+    const addRecipe = async () =>{
+        console.log("add")
+        const data ={
+        }
+        const path = `recipes/${ auth.currentUser.uid} /items`
+        const docRef = await addDoc( collection(db, path),data)
+        console.log(docRef.id)
+        router.replace('/home')
+    }
 
-    //const addRecipe()
-    
-    return(
-        <View style = {styles.container}>
-            <NewEditShow recipeName=" Recipe name" ingredients = " Ingredients" steps = " Steps" />
-            <Pressable style={ styles.addButton}  >
-                <Text style={ styles.addButtonText}> + </Text>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.logo}>Dish Delight</Text>
+            <NewEditShow recipeName=" Recipe name" ingredients=" Ingredients" steps=" Steps" />
+            <Pressable style={styles.addButton} onPress={ () => addRecipe()}  >
+                <Text style={styles.addButtonText}> + </Text>
             </Pressable>
         </View>
     )
-    
+
 }
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        backgroundColor: "#f7efd7",
         padding: 20,
     },
-    addButton:{
+    addButton: {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
@@ -36,9 +54,14 @@ const styles = StyleSheet.create({
         width: 75,
         height: 75,
     },
-    addButtonText:{
+    addButtonText: {
         textAlign: "center",
         fontSize: 15,
         fontWeight: "bold",
+    },
+    logo: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: 20
     }
 })

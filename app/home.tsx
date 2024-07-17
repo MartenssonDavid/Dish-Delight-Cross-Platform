@@ -5,43 +5,45 @@ import { useContext } from "react";
 import { Link, router } from "expo-router";
 
 
-export default function Home(props:any){
+
+export default function Home(props: any) {
     // Return list of items here
     const auth = useContext(AuthContext)
 
     // Function to sign out user and redirect to index
     const SignOutUser = () => {
-        signOut( auth )
-        .then( () => {
-            router.replace('/')
-        } )
-        .catch( ( error ) => {
-            console.log( error.code, error.message )
-        } )
+        signOut(auth)
+            .then(() => {
+                router.replace('/')
+            })
+            .catch((error) => {
+                console.log(error.code, error.message)
+            })
     }
-    return(
-            <View style={ styles.container}>
-                <Text>Home</Text>
-                <Pressable onPress={SignOutUser}>
-                    <Text>Sign out</Text>
-                </Pressable>
-                <Link href = {'/new'} style = { styles.addButton}>
-                    <Text style={ styles.addButtonText}> + </Text>
-                </Link>
-            </View>
+    
+    return (
+        <View style={styles.container}>
+            <Text style={styles.logo}>Home</Text>
+            <Pressable onPress={SignOutUser}>
+                <Text>Sign out</Text>
+            </Pressable>
+            <Link href={'/new'} style={styles.addButton}>
+                <Text style={styles.addButtonText}> + </Text>
+            </Link>
+        </View>
     )
 
 
 }
 
 const styles = StyleSheet.create({
-    container:{
-        
-        marginHorizontal: 20,
+    container: {
+        flex: 1,
+        alignItems: "center",
         backgroundColor: "#f7efd7",
         padding: 20,
     },
-    addButton:{
+    addButton: {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
@@ -56,9 +58,12 @@ const styles = StyleSheet.create({
         width: 75,
         height: 75,
     },
-    addButtonText:{
+    addButtonText: {
         textAlign: "center",
         fontSize: 15,
         fontWeight: "bold",
+    },
+    logo: {
+        textAlign: "center",
     }
 })
