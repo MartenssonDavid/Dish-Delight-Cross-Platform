@@ -3,9 +3,10 @@ import { Link } from 'expo-router'
 import { AuthForm } from '@/components/AuthForm'
 import { AuthContext } from '@/context/authContext'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
-import { useContext, useState } from 'react'
-import { useRouter } from 'expo-router'
+import { useContext, useState, useEffect } from 'react'
+import { useRouter,useNavigation } from 'expo-router'
 import { ErrorMessage } from "@/components/ErrorMessage"
+import { SignOutButton } from '@/components/SignOutButton'
 
 
 // Sign up/home
@@ -13,6 +14,7 @@ export default function SignUp(props: any) {
     // Get auth context 
     const auth = useContext(AuthContext)
     const router = useRouter()
+    const navigation = useNavigation()
     const [error, setError] = useState(' ')
 
     // Create account then redirect to home
@@ -29,7 +31,6 @@ export default function SignUp(props: any) {
         // If user already logged in, redirect to home
         onAuthStateChanged(auth, (user) => {
             if (user) {
-
                 router.replace('/home')
             }
             else {
@@ -37,20 +38,34 @@ export default function SignUp(props: any) {
         })
 
     }
+
+        // Header
+        useEffect(() => {
+            navigation.setOptions({
+                headerShown: true,
+                headerRight: () => <SignOutButton />
+            })
+        }, [navigation])
     return (
         <View>
             <AuthForm title="Sign up" action={createAccount} actionText="Sign up" />
-            <Link href={'/login'}>
-                <Text style={styles.text}> Already have an account? Go to Login</Text>
-            </Link>
+            <View style = {styles.container}>
+            <Text> Already have an account? </Text>
+                <Link href={'/login'}>
+                    <Text style={styles.link}>Go to Login</Text>
+                </Link>
+            </View>
             <ErrorMessage error={error} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    text: {
-        textAlign: "center"
+    container:{
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    link:{
+        color: "red",
     }
 })
-

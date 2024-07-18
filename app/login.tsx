@@ -26,10 +26,23 @@ export default function Login(props: any) {
     return (
         <View>
             <AuthForm title="Sign in using account details" actionText="Login" action={SignIn} />
-            <Link href={'/'}>
-                <Text> Go to sign up </Text>
-            </Link>
+            <View style = {styles.container}>
+                <Text>Don't have an account? </Text>
+                <Link href={'/'}>
+                    <Text style={styles.link}>Go to sign up </Text>
+                </Link>
+            </View>
             <ErrorMessage error={error} />
         </View>
     )
 }   
+
+const styles = StyleSheet.create({
+    container:{
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    link:{
+        color: "red",
+    }
+})

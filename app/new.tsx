@@ -1,10 +1,11 @@
+import { SignOutButton } from "@/components/SignOutButton" 
 import { NewEditShow } from "@/components/NewEditShow"
 import { View, Text, StyleSheet, Pressable } from "react-native"
 import { AuthContext } from "@/context/authContext"
 import { DBContext } from "@/context/DBcontext"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { collection, addDoc} from "firebase/firestore"
-import { useRouter } from "expo-router"
+import { useRouter, useNavigation } from "expo-router"
 
 export default function New(props: any) {
     const router = useRouter()
@@ -12,6 +13,8 @@ export default function New(props: any) {
     const auth = useContext(AuthContext)
     // Databse
     const db = useContext(DBContext)
+    // Navigation
+    const navigation = useNavigation()
     // Add data to db, async since await
     const addRecipe = async () =>{
         console.log("add")
@@ -23,10 +26,18 @@ export default function New(props: any) {
         router.replace('/home')
     }
 
+    // Header
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: true,
+            headerRight: () => <SignOutButton />
+        })
+    }, [navigation])
+
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Dish Delight</Text>
-            <NewEditShow recipeName=" Recipe name" ingredients=" Ingredients" steps=" Steps" />
+            <NewEditShow recipeName=" Recipe name " ingredients=" Ingredients " steps=" Steps" />
             <Pressable style={styles.addButton} onPress={ () => addRecipe()}  >
                 <Text style={styles.addButtonText}> + </Text>
             </Pressable>

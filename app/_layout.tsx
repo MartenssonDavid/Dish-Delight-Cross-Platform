@@ -27,7 +27,7 @@ export default function RootLayout() {
     <AuthContext.Provider value={auth}>
       <DBContext.Provider value={db}>
         <SafeAreaView style={styles.container}>
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack  screenOptions={{headerShown: false}}/>
         </SafeAreaView>
       </DBContext.Provider>
     </AuthContext.Provider>

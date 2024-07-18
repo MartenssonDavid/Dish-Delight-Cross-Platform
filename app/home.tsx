@@ -1,32 +1,34 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { signOut } from "firebase/auth";
 import { AuthContext } from "@/context/authContext";
-import { useContext } from "react";
-import { Link, router } from "expo-router";
+import { useContext, useEffect, useState } from "react";
+import { Link, router, useNavigation } from "expo-router";
+import { SignOutButton } from "@/components/SignOutButton";
+
+import { collection, getDocs, where, onSnapshot } from "firebase/firestore";
 
 
 
 export default function Home(props: any) {
-    // Return list of items here
-    const auth = useContext(AuthContext)
 
-    // Function to sign out user and redirect to index
-    const SignOutUser = () => {
-        signOut(auth)
-            .then(() => {
-                router.replace('/')
-            })
-            .catch((error) => {
-                console.log(error.code, error.message)
-            })
+    const auth = useContext(AuthContext)
+    const navigation = useNavigation()
+
+    // Header
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: true,
+            headerRight: () => <SignOutButton />
+        })
+    }, [navigation])
+
+    // Function to get data
+    const fethData = async () =>{
+        
     }
     
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Home</Text>
-            <Pressable onPress={SignOutUser}>
-                <Text>Sign out</Text>
-            </Pressable>
             <Link href={'/new'} style={styles.addButton}>
                 <Text style={styles.addButtonText}> + </Text>
             </Link>
