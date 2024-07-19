@@ -12,3 +12,9 @@ Ui and signout
 
 Submission 5
 Small changes and data can now be added via reusable component
+
+Submission 6
+Had problems showing data, wrong path name, fixed
+
+Submission 7
+Added splahs and logo

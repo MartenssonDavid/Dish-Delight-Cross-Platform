@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
 import { AuthContext } from "@/context/authContext";
 import { useContext, useEffect, useState } from "react";
 import { Link, router, useNavigation } from "expo-router";
@@ -60,7 +60,8 @@ export default function Home(props: any) {
     const ListItem = (props:any) => {
         return(
             <View style={styles.listItem}>
-                <Text>{props.id}</Text>
+                <Image style={styles.image}></Image>
+                <Text>{props.recipeName}</Text>
             </View>
         )
     }
@@ -90,9 +91,11 @@ export default function Home(props: any) {
             style={styles.list}
             >
             </FlatList>
-            <Link href={'/new'} style={styles.addButton}>
-                <Text style={styles.addButtonText}> + </Text>
-            </Link>
+            <Pressable style={styles.addButton}>
+                <Link href={'/new'}>
+                    <Text style={styles.addButtonText}>+</Text>
+                </Link>
+            </Pressable>
         </View>
     )
 
@@ -138,5 +141,13 @@ const styles = StyleSheet.create({
     },
     separator:{
         height: 3
+    },
+    image:{
+        width: 50,
+        borderStyle: "solid",
+        height: 50,
+        borderWidth: 2,
+        borderColor: "grey",
+        margin: 5
     }
 })
