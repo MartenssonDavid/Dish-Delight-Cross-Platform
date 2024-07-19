@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
 import { AuthContext } from "@/context/authContext";
 import { useContext, useEffect, useState } from "react";
 import { Link, router, useNavigation } from "expo-router";
 import { SignOutButton } from "@/components/SignOutButton";
 import { DBContext } from "@/context/DBcontext";
 
-import { collection, getDocs, where, onSnapshot, query, QuerySnapshot } from "firebase/firestore";
-import { FlatList } from "react-native-gesture-handler";
+import { collection, getDocs, where, onSnapshot, query } from "firebase/firestore";
+
 
 
 
@@ -28,7 +28,7 @@ export default function Home(props: any) {
             fetchData()
             setLoaded(true)
         }
-    },[auth,data])
+    },[data, auth])
 
     // Header
     useEffect(() => {
@@ -41,16 +41,17 @@ export default function Home(props: any) {
     // Function to get data
     const fetchData = async () =>{
         // Get docuemens from current signed in user
-        const  path = `users/${ auth.currentUser.uid}/recipes`
+        const  path = `user/${ auth.currentUser.uid}/recipes`
         const q = query(collection (db, path))
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            const recipes: any = []
+            let recipes: any = []
             querySnapshot.forEach((doc)=>{
                 const item = doc.data()
                 item.id = doc.id
                 recipes.push(item)
             })
             setData(recipes)
+            console.log(data)
         })
 
     }
@@ -59,7 +60,7 @@ export default function Home(props: any) {
     const ListItem = (props:any) => {
         return(
             <View style={styles.listItem}>
-                <Text>{props.recipeName}</Text>
+                <Text>{props.id}</Text>
             </View>
         )
     }
