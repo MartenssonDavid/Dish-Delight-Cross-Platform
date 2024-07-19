@@ -1,16 +1,26 @@
 import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-export function NewEditShow(props: any) {
+// Interface for props, since setter is function, declare as function that returns nothing
+interface NewEditProps {
+    recipeName: string,
+    setRecipeName: (recipeName: string) => void
+    ingredients: string,
+    setIngredients: (ingredients: string) => void
+    steps: string,
+    setSteps: (steps: string) => void
+}
 
+// When text is changed, use text to setState
+export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredients, steps, setSteps} : NewEditProps) {
     return (
         <View style={styles.container}>
-            <TextInput style={styles.name} placeholder='Recipe Name'></TextInput> 
+            <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={ (text) => {setRecipeName(text)}}></TextInput> 
             <Image style={styles.image} />
-            <Text style={styles.title}>{props.ingredients}</Text>
-            <TextInput style={styles.textBox} multiline></TextInput>
-            <Text style={styles.title}>{props.steps}</Text>
-            <TextInput style={styles.textBox} multiline></TextInput>
+            <Text style={styles.title}>Ingredients</Text>
+            <TextInput style={styles.textBox} multiline onChangeText={ (text) => {setIngredients(text)}}></TextInput>
+            <Text style={styles.title}>Steps</Text>
+            <TextInput style={styles.textBox} multiline onChangeText={ (text) => {setSteps(text)}}></TextInput>
         </View>
     )
 }
@@ -41,7 +51,8 @@ const styles = StyleSheet.create({
         borderColor: "grey",
         borderRadius: 10,
         height: '20%',
-        width: '80%'
+        width: '80%',
+        padding: 10
 
     },
     image: {

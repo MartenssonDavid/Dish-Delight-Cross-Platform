@@ -9,3 +9,6 @@ Added error handeling/ message, adding data to DB, Ui work
 
 Submission 4
 Ui and signout
+
+Submission 5
+Small changes and data can now be added via reusable component

@@ -3,7 +3,7 @@ import { NewEditShow } from "@/components/NewEditShow"
 import { View, Text, StyleSheet, Pressable } from "react-native"
 import { AuthContext } from "@/context/authContext"
 import { DBContext } from "@/context/DBcontext"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { collection, addDoc} from "firebase/firestore"
 import { useRouter, useNavigation } from "expo-router"
 
@@ -15,14 +15,24 @@ export default function New(props: any) {
     const db = useContext(DBContext)
     // Navigation
     const navigation = useNavigation()
-    // Add data to db, async since await
-    const addRecipe = async () =>{
+
+    // States for input of data
+    const [recipeName, setRecipeName] = useState('')
+    const [ingredients, setIngredients] = useState('')
+    const [steps, setSteps] = useState('')
+
+    // Add data to db
+    const addRecipe = async (recipeName: string, ingredients: string, steps: string) =>{
         console.log("add")
         const data ={
+            recipeName: recipeName,
+            ingredients: ingredients,
+            steps: steps,
         }
-        const path = `recipes/${ auth.currentUser.uid} /items`
+        const path = `user/${ auth.currentUser.uid}/recipes`
         const docRef = await addDoc( collection(db, path),data)
         console.log(docRef.id)
+        console.log(data)
         router.replace('/home')
     }
 
@@ -37,8 +47,15 @@ export default function New(props: any) {
     return (
         <View style={styles.container}>
             <Text style={styles.logo}>Dish Delight</Text>
-            <NewEditShow recipeName=" Recipe name " ingredients=" Ingredients " steps=" Steps" />
-            <Pressable style={styles.addButton} onPress={ () => addRecipe()}  >
+            <NewEditShow 
+                recipeName={recipeName} 
+                setRecipeName={setRecipeName} 
+                ingredients={ingredients} 
+                setIngredients={setIngredients} 
+                steps={steps} 
+                setSteps={setSteps}
+            />
+            <Pressable style={styles.addButton} onPress={ () => addRecipe(recipeName,ingredients,steps)}  >
                 <Text style={styles.addButtonText}> + </Text>
             </Pressable>
         </View>

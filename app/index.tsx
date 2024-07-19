@@ -43,7 +43,6 @@ export default function SignUp(props: any) {
         useEffect(() => {
             navigation.setOptions({
                 headerShown: true,
-                headerRight: () => <SignOutButton />
             })
         }, [navigation])
     return (
