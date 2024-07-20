@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, router, useNavigation } from "expo-router";
 import { SignOutButton } from "@/components/SignOutButton";
 import { DBContext } from "@/context/DBcontext";
+import  Header  from "@/components/Header"
 
 import { collection, getDocs, where, onSnapshot, query } from "firebase/firestore";
 
@@ -34,7 +35,9 @@ export default function Home(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
-            headerRight: () => <SignOutButton />
+            headerRight: () => <SignOutButton />,
+            headerTitle: () => <Header/>,
+            headerLeft: null
         })
     }, [navigation])
 

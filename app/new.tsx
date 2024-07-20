@@ -40,7 +40,9 @@ export default function New(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
+            title: 'New',
             headerRight: () => <SignOutButton />
+
         })
     }, [navigation])
 

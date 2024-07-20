@@ -6,6 +6,7 @@ import { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '@/context/authContext'
 import { useRouter,useNavigation} from 'expo-router'
 import { ErrorMessage } from '@/components/ErrorMessage'
+import Header from '@/components/Header'
 
 // Home page/ login
 export default function Login(props: any) {
@@ -29,6 +30,7 @@ export default function Login(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
+            headerTitle: () => <Header/>
         })
     }, [navigation])
     return (

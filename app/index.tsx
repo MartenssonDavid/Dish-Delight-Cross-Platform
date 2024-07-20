@@ -7,6 +7,7 @@ import { useContext, useState, useEffect } from 'react'
 import { useRouter,useNavigation } from 'expo-router'
 import { ErrorMessage } from "@/components/ErrorMessage"
 import { SignOutButton } from '@/components/SignOutButton'
+import Header from '@/components/Header'
 
 
 // Sign up/home
@@ -43,6 +44,8 @@ export default function SignUp(props: any) {
         useEffect(() => {
             navigation.setOptions({
                 headerShown: true,
+                headerTitle: () => <Header/>
+                
             })
         }, [navigation])
     return (
