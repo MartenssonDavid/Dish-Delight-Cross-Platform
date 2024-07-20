@@ -30,13 +30,17 @@ export default function Login(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
-            headerTitle: () => <Header/>
+            headerTitle: () => <Header/>,
+            headerLeft: null,
+            headerStyle:{
+            backgroundColor: "#4F7942",
+            }
         })
     }, [navigation])
     return (
-        <View>
+        <View style = {styles.container}>
             <AuthForm title="Sign in using account details" actionText="Login" action={SignIn} />
-            <View style = {styles.container}>
+            <View style = {styles.form}>
                 <Text>Don't have an account? </Text>
                 <Link href={'/'}>
                     <Text style={styles.link}>Go to sign up </Text>
@@ -49,6 +53,10 @@ export default function Login(props: any) {
 
 const styles = StyleSheet.create({
     container:{
+        flex: 1,
+        backgroundColor: "#9DC183",
+    },
+    form:{
         flexDirection: "row",
         justifyContent: "center",
     },

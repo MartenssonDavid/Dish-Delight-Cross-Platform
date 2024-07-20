@@ -18,3 +18,9 @@ Had problems showing data, wrong path name, fixed
 
 Submission 7
 Added splahs and logo
+
+Submission 8
+Header customized
+
+Submission 9
+Ui changes, detailed view for each document that fetches data in document

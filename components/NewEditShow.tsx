@@ -12,15 +12,15 @@ interface NewEditProps {
 }
 
 // When text is changed, use text to setState
-export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredients, steps, setSteps} : NewEditProps) {
+export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredients, steps, setSteps }: NewEditProps) {
     return (
         <View style={styles.container}>
-            <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={ (text) => {setRecipeName(text)}}></TextInput> 
+            <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={(text) => { setRecipeName(text) }} value={recipeName}></TextInput>
             <Image style={styles.image} />
             <Text style={styles.title}>Ingredients</Text>
-            <TextInput style={styles.textBox} multiline onChangeText={ (text) => {setIngredients(text)}}></TextInput>
+            <TextInput style={styles.textBox} multiline onChangeText={(text) => { setIngredients(text) }} value={ingredients}></TextInput>
             <Text style={styles.title}>Steps</Text>
-            <TextInput style={styles.textBox} multiline onChangeText={ (text) => {setSteps(text)}}></TextInput>
+            <TextInput style={styles.textBox} multiline onChangeText={(text) => { setSteps(text) }} value={steps}></TextInput>
         </View>
     )
 }
@@ -34,42 +34,48 @@ const styles = StyleSheet.create({
         marginVertical: 20,
         borderRadius: 10,
         paddingVertical: 20,
-        borderStyle: "solid",
-        borderColor: "grey",
-        borderWidth: 2,
+        backgroundColor: "#8A9A5B",
+        borderBottomWidth: 3,
+        borderBottomColor: "#4b5320",
+
     },
     title: {
         fontSize: 14,
         textAlign: "center",
         marginVertical: 10,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: "Verdana",
+        color: "#1D2E28"
     },
     textBox: {
         flex: 1,
         borderStyle: "solid",
-        borderWidth: 2,
-        borderColor: "grey",
         borderRadius: 10,
         height: '20%',
         width: '80%',
-        padding: 10
+        padding: 10,
+        borderBottomWidth: 3,
+        borderBottomColor: "#4b5320",
+        backgroundColor: "#fff8dc"
 
     },
     image: {
         width: 150,
         height: 150,
-        borderStyle: "solid",
-        borderColor: "grey",
-        borderWidth: 2,
+        borderBottomWidth: 3,
+        borderBottomColor: "#4b5320",
+        backgroundColor: "#fff8dc",
+        borderRadius: 10,
     },
-    name:{
+    name: {
         fontSize: 14,
         textAlign: "center",
         marginVertical: 10,
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "grey",
-        borderRadius: 5
+        padding: 2,
+        borderBottomWidth: 3,
+        borderBottomColor: "#4b5320",
+        backgroundColor: "#fff8dc",
+        borderRadius: 10,
     }
 
 })

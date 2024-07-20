@@ -6,6 +6,7 @@ import { DBContext } from "@/context/DBcontext"
 import { useContext, useEffect, useState } from "react"
 import { collection, addDoc} from "firebase/firestore"
 import { useRouter, useNavigation } from "expo-router"
+import Header from "@/components/Header"
 
 export default function New(props: any) {
     const router = useRouter()
@@ -40,15 +41,18 @@ export default function New(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
-            title: 'New',
-            headerRight: () => <SignOutButton />
+            headerTitle: () => <Header/>,
+            headerRight: () => <SignOutButton />,
+            
+            headerStyle:{
+                backgroundColor: "#4F7942",
+            }
 
         })
     }, [navigation])
 
     return (
         <View style={styles.container}>
-            <Text style={styles.logo}>Dish Delight</Text>
             <NewEditShow 
                 recipeName={recipeName} 
                 setRecipeName={setRecipeName} 
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: "#9DC183", 
     },
     addButton: {
         justifyContent: "center",
@@ -75,11 +80,10 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 10,
         right: 10,
-        backgroundColor: "grey",
+        backgroundColor: "#4F7942",
         padding: 15,
-        borderColor: "black",
-        borderStyle: "solid",
-        borderWidth: 2,
+        borderBottomColor: "#4b5320",
+        borderBottomWidth: 3,
         borderRadius: 40,
         width: 75,
         height: 75,
@@ -89,9 +93,4 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
-    logo: {
-        textAlign: "center",
-        fontWeight: "bold",
-        fontSize: 20
-    }
 })

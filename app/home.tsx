@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable, FlatList, Image, TextInput } from "react-native";
 import { AuthContext } from "@/context/authContext";
 import { useContext, useEffect, useState } from "react";
 import { Link, router, useNavigation } from "expo-router";
@@ -7,6 +7,7 @@ import { DBContext } from "@/context/DBcontext";
 import  Header  from "@/components/Header"
 
 import { collection, getDocs, where, onSnapshot, query } from "firebase/firestore";
+
 
 
 
@@ -37,7 +38,10 @@ export default function Home(props: any) {
             headerShown: true,
             headerRight: () => <SignOutButton />,
             headerTitle: () => <Header/>,
-            headerLeft: null
+            headerLeft: null,
+            headerStyle:{
+            backgroundColor: "#4F7942",
+            }
         })
     }, [navigation])
 
@@ -61,11 +65,15 @@ export default function Home(props: any) {
 
     // List items
     const ListItem = (props:any) => {
-        return(
+        return(                
+        <Link href = {{ pathname :"/detailedView", params: {id: props.id} }} style={styles.link}>
             <View style={styles.listItem}>
                 <Image style={styles.image}></Image>
-                <Text>{props.recipeName}</Text>
+                <View style={styles.name}>
+                <Text style={styles.listText}>{props.recipeName}</Text>              
+                </View>
             </View>
+        </Link>
         )
     }
 
@@ -82,10 +90,11 @@ export default function Home(props: any) {
             <ListItem recipeName={item.recipeName} id={item.id}/>
         )
     }
+
     
     return (
         <View style={styles.container}>
-            <Text style={styles.logo}>Home</Text>
+
             <FlatList 
             data={data}
             renderItem={renderItem}
@@ -109,7 +118,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "#f7efd7",
+        justifyContent: "center",
+        backgroundColor: "#9DC183",
         padding: 20,
     },
     addButton: {
@@ -118,11 +128,10 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 10,
         right: 10,
-        backgroundColor: "grey",
+        backgroundColor: "#4F7942",
         padding: 15,
-        borderColor: "black",
-        borderStyle: "solid",
-        borderWidth: 2,
+        borderBottomColor: "#4b5320",
+        borderBottomWidth: 3,
         borderRadius: 40,
         width: 75,
         height: 75,
@@ -132,25 +141,61 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
-    logo: {
-        textAlign: "center",
-    },
     list:{
-        flex: 1
+        flex: 1,
+        width: "95%"
     },
     listItem:{
         flexDirection: "row",
-        backgroundColor: "#CCCCCC"
+        backgroundColor: "#8A9A5B",
+        borderBottomWidth: 3,
+        borderColor: "#4b5320",
+        borderRadius: 10,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        padding: 10,
+        alignItems: "center",
+        justifyContent: "flex-start",
+        width: '100%',
     },
     separator:{
-        height: 3
+        height: 5
     },
     image:{
-        width: 50,
+        width: 70,
         borderStyle: "solid",
-        height: 50,
-        borderWidth: 2,
+        height: 70,
+        margin: 5,
+        borderRadius: 5,
+        borderColor: "#4b5320",
+        borderBottomWidth: 3,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+    },
+    searchBar:{
+        fontSize: 14,
+        textAlign: "center",
+        marginVertical: 10,
+        borderStyle: "solid",
+        borderWidth: 1,
         borderColor: "grey",
-        margin: 5
+        borderRadius: 5
+    },
+    listText:{
+        paddingHorizontal: 10,
+        paddingTop: 5,
+        fontWeight: "bold",
+        fontFamily: "Verdana",
+        color: "#1D2E28"
+    },
+    name:{
+        flex:1,
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+
+    },
+    link: {
+        flex:1
     }
 })
