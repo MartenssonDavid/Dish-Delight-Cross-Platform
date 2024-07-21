@@ -24,3 +24,9 @@ Header customized
 
 Submission 9
 Ui changes, detailed view for each document that fetches data in document
+
+Submission 10
+Documents can be deleted and edited
+
+TODO
+Add pictures will be the next step, I focused on CRUD when it came to text
