@@ -1,8 +1,8 @@
-import { Link } from 'expo-router'
+import { Link,Stack } from 'expo-router'
 import { SafeAreaView, Text, Pressable, View, StyleSheet, StatusBar, TextInput } from 'react-native'
 import { AuthForm } from '@/components/AuthForm'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect, useLayoutEffect } from 'react'
 import { AuthContext } from '@/context/authContext'
 import { useRouter,useNavigation} from 'expo-router'
 import { ErrorMessage } from '@/components/ErrorMessage'
@@ -19,7 +19,7 @@ export default function Login(props: any) {
     const SignIn = (email: string, password: string) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                router.replace('/home')
+                router.push('/home')
             })
             .catch((error) => {
                 setError(error.code)
@@ -27,16 +27,18 @@ export default function Login(props: any) {
     }
 
     // Header
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: true,
             headerTitle: () => <Header/>,
-            headerLeft: null,
+            headerBackTitleVisible: false,
             headerStyle:{
-            backgroundColor: "#4F7942",
-            }
+                backgroundColor: "#4F7942",
+                }
+            
         })
     }, [navigation])
+
     return (
         <View style = {styles.container}>
             <AuthForm title="Sign in using account details" actionText="Login" action={SignIn} />

@@ -8,11 +8,14 @@ import { DBContext } from '@/context/DBcontext'
 import { AuthContext } from '@/context/authContext'
 import { doc, getDoc, deleteDoc, setDoc, collection, documentId } from 'firebase/firestore'
 
-export default function detailedView(props: any) {
 
+export default function detailedView(props: any) {
+    // Inputs
     const [recipeName, setRecipeName] = useState('')
     const [ingredients, setIngredients] = useState('')
     const [steps, setSteps] = useState('')
+    const [image, setImage] = useState('')
+
     const router = useRouter()
     const navigation = useNavigation()
     const params = useLocalSearchParams()
@@ -41,6 +44,7 @@ export default function detailedView(props: any) {
             setRecipeName(data.recipeName)
             setIngredients(data.ingredients)
             setSteps(data.steps)
+            setImage(data.imageLink)
         } else {
             console.log("No document found")
         }
@@ -53,7 +57,7 @@ export default function detailedView(props: any) {
         const delDoc = await deleteDoc( docRef )
         navigation.goBack()
     }
-
+    // Update, move to edit
     const addRecipe = async (recipeName: string, ingredients: string, steps: string) =>{
         console.log("add")
         const data ={
@@ -67,6 +71,11 @@ export default function detailedView(props: any) {
         console.log(data)
         router.replace('/home')
     }
+
+    // Empty function to fill imagePick, not the best solution
+    const filler =() =>{}
+
+
     return (
         <View style={styles.container}>
             <NewEditShow
@@ -75,13 +84,20 @@ export default function detailedView(props: any) {
                 ingredients={ingredients}
                 setIngredients={setIngredients}
                 steps={steps}
-                setSteps={setSteps}>
+                setSteps={setSteps}
+                image={image}
+                setImage={setImage}
+                // Figure out better way to solve this, imagePick not needed here
+                imagePick={filler}>
+
             </NewEditShow>
             <View>
             <Pressable style={styles.deleteButton} onPress={()=> deleteDocument(id as string)}>
                 <Text>Delete</Text>
             </Pressable>
-            <Pressable style = {styles.addButton}  onPress={ () => addRecipe(recipeName,ingredients,steps)}>Edit</Pressable>
+            <Pressable style = {styles.addButton}  onPress={ () => addRecipe(recipeName,ingredients,steps)}>
+                <Text>Edit</Text>
+            </Pressable>
             </View>
         </View>
 
@@ -100,29 +116,29 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: 10,
-        left: 10,
+        bottom: 1,
+        left: 1,
         backgroundColor: "#4F7942",
         padding: 15,
         borderBottomColor: "#4b5320",
         borderBottomWidth: 3,
         borderRadius: 40,
-        width: 75,
-        height: 75,
+        width: 44,
+        height: 44,
     },
     addButton: {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: 10,
-        right: 10,
+        bottom: 1,
+        right: 1,
         backgroundColor: "#4F7942",
         padding: 15,
         borderBottomColor: "#4b5320",
         borderBottomWidth: 3,
         borderRadius: 40,
-        width: 75,
-        height: 75,
+        width: 44,
+        height: 44,
     },
 
 })

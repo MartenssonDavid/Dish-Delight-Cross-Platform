@@ -7,6 +7,7 @@ import { DBContext } from "@/context/DBcontext";
 import  Header  from "@/components/Header"
 
 import { collection, getDocs, where, onSnapshot, query } from "firebase/firestore";
+import { ScreenStackHeaderLeftView } from "react-native-screens";
 
 
 
@@ -24,21 +25,27 @@ export default function Home(props: any) {
     // Set if data is loaded or not
     const [loaded, setLoaded] = useState(false)
 
+    // Search
+    const [search, setSearch] = useState("")
+
     // Load data on start, check state, if false, fetchData
     useEffect(() =>{
         if (loaded == false){
             fetchData()
             setLoaded(true)
-        }
-    },[data, auth])
+        }   
+    },[data, auth, search])
+
+
 
     // Header
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
+            ScreenStackHeaderLeftView : false,
             headerRight: () => <SignOutButton />,
             headerTitle: () => <Header/>,
-            headerLeft: null,
+
             headerStyle:{
             backgroundColor: "#4F7942",
             }
@@ -58,22 +65,42 @@ export default function Home(props: any) {
                 recipes.push(item)
             })
             setData(recipes)
-            console.log(data)
+
         })
+        console.log(data)
 
     }
+
+    // Seacrch 
+        const searchData = async () => {
+            const  path = `user/${ auth.currentUser.uid}/recipes`
+            const q = query(collection (db, path), where("recipeName", "==" ,search) )
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                let recipes: any = []
+                querySnapshot.forEach((doc)=>{
+                    const item = doc.data()
+                    item.id = doc.id
+                    recipes.push(item)
+                })
+                setData(recipes)
+                console.log(data)
+                console.log("Search Term" + search)
+            })
+        }
 
     // List items
     const ListItem = (props:any) => {
         return(                
-        <Link href = {{ pathname :"/detailedView", params: {id: props.id} }} style={styles.link}>
+        
             <View style={styles.listItem}>
-                <Image style={styles.image}></Image>
+                <Image source = {{uri: props.imageLink}} style={styles.image}></Image>
                 <View style={styles.name}>
-                <Text style={styles.listText}>{props.recipeName}</Text>              
+                <Link href = {{ pathname :"/detailedView", params: {id: props.id} }} style={styles.link}>
+                <Text style={styles.listText}>{props.recipeName}</Text>            
+                </Link>  
                 </View>
             </View>
-        </Link>
+
         )
     }
 
@@ -87,14 +114,14 @@ export default function Home(props: any) {
     // Items 
     const renderItem = ({item}: any) =>{
         return(
-            <ListItem recipeName={item.recipeName} id={item.id}/>
+            <ListItem style={styles.listText} recipeName={item.recipeName} id={item.id} imageLink={item.imageLink}/>
         )
     }
 
     
     return (
         <View style={styles.container}>
-
+            <TextInput onChangeText={setSearch}></TextInput>
             <FlatList 
             data={data}
             renderItem={renderItem}
@@ -117,8 +144,6 @@ export default function Home(props: any) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
         backgroundColor: "#9DC183",
         padding: 20,
     },
@@ -130,8 +155,10 @@ const styles = StyleSheet.create({
         right: 10,
         backgroundColor: "#4F7942",
         padding: 15,
-        borderBottomColor: "#4b5320",
-        borderBottomWidth: 3,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: "#4b5320",
+        borderBottomWidth: 5,
         borderRadius: 40,
         width: 75,
         height: 75,
@@ -143,7 +170,7 @@ const styles = StyleSheet.create({
     },
     list:{
         flex: 1,
-        width: "95%"
+
     },
     listItem:{
         flexDirection: "row",
@@ -154,9 +181,20 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
         borderLeftWidth: 1,
         padding: 10,
-        alignItems: "center",
-        justifyContent: "flex-start",
-        width: '100%',
+        justifyContent: "space-between",
+
+    },
+    link: {
+        flex: 1
+    },
+    listText:{
+        flex: 1,
+        paddingHorizontal: 10,
+        paddingTop: 5,
+        fontWeight: "bold",
+        fontFamily: "Verdana",
+        color: "#1D2E28",
+
     },
     separator:{
         height: 5
@@ -181,13 +219,6 @@ const styles = StyleSheet.create({
         borderColor: "grey",
         borderRadius: 5
     },
-    listText:{
-        paddingHorizontal: 10,
-        paddingTop: 5,
-        fontWeight: "bold",
-        fontFamily: "Verdana",
-        color: "#1D2E28"
-    },
     name:{
         flex:1,
         textAlign: "center",
@@ -195,7 +226,5 @@ const styles = StyleSheet.create({
         justifyContent: "center",
 
     },
-    link: {
-        flex:1
-    }
+
 })

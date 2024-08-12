@@ -8,9 +8,9 @@ export function NewEditShow(props: any) {
             <Text style={styles.title}>{props.recipeName}</Text>
             <Image style={styles.image} />
             <Text style={styles.title}>{props.ingredients}</Text>
-            <TextInput editable={false} style={styles.textBox} multiline></TextInput>
+            <TextInput style={styles.textBox} multiline></TextInput>
             <Text style={styles.title}>{props.steps}</Text>
-            <TextInput editable={false} style={styles.textBox} multiline></TextInput>
+            <TextInput style={styles.textBox} multiline></TextInput>
         </View>
     )
 }

@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // Interface for props, since setter is function, declare as function that returns nothing
 interface NewEditProps {
@@ -9,18 +9,27 @@ interface NewEditProps {
     setIngredients: (ingredients: string) => void
     steps: string,
     setSteps: (steps: string) => void
+    image: string,
+    setImage: (image:string) => void,
+    // Figure out better solution
+    imagePick: () => void
+
 }
 
 // When text is changed, use text to setState
-export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredients, steps, setSteps }: NewEditProps) {
+export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredients, steps, setSteps, image, setImage, imagePick }: NewEditProps) {
+    // Have default image as
+    //const defaultImage = require('@/assets/images/icon.png')
     return (
         <View style={styles.container}>
             <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={(text) => { setRecipeName(text) }} value={recipeName}></TextInput>
-            <Image style={styles.image} />
+            <Pressable style={styles.image} onPress={imagePick}>
+                <Image source= {{uri: image}} style={styles.image} />
+            </Pressable>
             <Text style={styles.title}>Ingredients</Text>
-            <TextInput style={styles.textBox} multiline onChangeText={(text) => { setIngredients(text) }} value={ingredients}></TextInput>
+            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setIngredients(text) }} value={ingredients}></TextInput>
             <Text style={styles.title}>Steps</Text>
-            <TextInput style={styles.textBox} multiline onChangeText={(text) => { setSteps(text) }} value={steps}></TextInput>
+            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setSteps(text) }} value={steps}></TextInput>
         </View>
     )
 }
@@ -48,7 +57,6 @@ const styles = StyleSheet.create({
         color: "#1D2E28"
     },
     textBox: {
-        flex: 1,
         borderStyle: "solid",
         borderRadius: 10,
         height: '20%',

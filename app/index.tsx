@@ -40,18 +40,7 @@ export default function SignUp(props: any) {
 
     }
 
-        // Header
-        useEffect(() => {
-            navigation.setOptions({
-                headerShown: true,
-                headerTitle: () => <Header/>,
-                headerLeft: null,
-                headerStyle:{
-                    backgroundColor: "#4F7942",
-                    }
-                
-            })
-        }, [navigation])
+
     return (
         <View style = {styles.container}>
             <AuthForm title="Sign up" action={createAccount} actionText="Sign up" />
