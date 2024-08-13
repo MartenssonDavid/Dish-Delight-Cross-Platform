@@ -38,7 +38,6 @@ export default function RootLayout() {
         <imageDBContext.Provider value = {imageDB}>
           <SafeAreaView style={styles.container}>
             <Stack  screenOptions={{headerShown: true,
-                          headerBackTitleVisible : false,
                           headerTitle: () => <Header/>,
                           headerStyle:{
                           backgroundColor: "#4F7942",

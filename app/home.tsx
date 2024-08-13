@@ -71,7 +71,7 @@ export default function Home(props: any) {
 
     }
 
-    // Seacrch 
+    // Search 
         const searchData = async () => {
             const  path = `user/${ auth.currentUser.uid}/recipes`
             const q = query(collection (db, path), where("recipeName", "==" ,search) )
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
         borderColor: "#4b5320",
         borderBottomWidth: 5,
         borderRadius: 40,
-        width: 75,
-        height: 75,
+        width: 44,
+        height: 44,
     },
     addButtonText: {
         textAlign: "center",

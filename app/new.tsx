@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
         borderBottomColor: "#4b5320",
         borderBottomWidth: 3,
         borderRadius: 40,
-        width: 75,
-        height: 75,
+        width: 44,
+        height: 44,
     },
     addButtonText: {
         textAlign: "center",
