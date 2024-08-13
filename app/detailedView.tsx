@@ -11,9 +11,9 @@ import { doc, getDoc, deleteDoc, setDoc, collection, documentId } from 'firebase
 
 export default function detailedView(props: any) {
     // Inputs
-    const [recipeName, setRecipeName] = useState('')
-    const [ingredients, setIngredients] = useState('')
-    const [steps, setSteps] = useState('')
+    const [recipeName, setRecipeName] = useState<string[]>([])
+    const [ingredients, setIngredients] = useState<string[]>([])
+    const [steps, setSteps] = useState<string[]>([])
     const [image, setImage] = useState('')
 
     const router = useRouter()
@@ -58,7 +58,7 @@ export default function detailedView(props: any) {
         navigation.goBack()
     }
     // Update, move to edit
-    const addRecipe = async (recipeName: string, ingredients: string, steps: string) =>{
+    const addRecipe = async (recipeName: string[], ingredients: string[], steps: string[]) =>{
         console.log("add")
         const data ={
             recipeName: recipeName,

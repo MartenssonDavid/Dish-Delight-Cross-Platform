@@ -34,9 +34,9 @@ export default function New(props: any) {
 
 
     // States for input of data
-    const [recipeName, setRecipeName] = useState('')
-    const [ingredients, setIngredients] = useState('')
-    const [steps, setSteps] = useState('')
+    const [recipeName, setRecipeName] = useState<string[]>([])
+    const [ingredients, setIngredients] = useState<string[]>([])
+    const [steps, setSteps] = useState<string[]>([])
     // Default to display default image
     const [image,setImage] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
     // Default to upload default image
@@ -91,7 +91,7 @@ export default function New(props: any) {
     }
 
     // Add data to db, using URL from image
-    const addRecipe = async (recipeName: string, ingredients: string, steps: string, imageLink: string) =>{
+    const addRecipe = async (recipeName: string[], ingredients: string[], steps: string[], imageLink: string) =>{
 
         // Get resulring uri from 
         const data ={

@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react'
 
 // Interface for props, since setter is function, declare as function that returns nothing
 interface NewEditProps {
-    recipeName: string,
-    setRecipeName: (recipeName: string) => void
-    ingredients: string,
-    setIngredients: (ingredients: string) => void
-    steps: string,
-    setSteps: (steps: string) => void
+    recipeName: string[],
+    setRecipeName: (recipeName: string[]) => void
+    ingredients: string[],
+    setIngredients: (ingredients: string[]) => void
+    steps: string[],
+    setSteps: (steps: string[]) => void
     image: string,
     setImage: (image:string) => void,
     // Figure out better solution
@@ -22,14 +22,14 @@ export function NewEditShow({ recipeName, setRecipeName, ingredients, setIngredi
     //const defaultImage = require('@/assets/images/icon.png')
     return (
         <View style={styles.container}>
-            <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={(text) => { setRecipeName(text) }} value={recipeName}></TextInput>
+            <TextInput style={styles.name} placeholder='Recipe Name' onChangeText={(text) => { setRecipeName(text.split('\n').filter(line => line.trim() !=="")) }} value={recipeName.join('\n')}></TextInput>
             <Pressable style={styles.image} onPress={imagePick}>
                 <Image source= {{uri: image}} style={styles.image} />
             </Pressable>
             <Text style={styles.title}>Ingredients</Text>
-            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setIngredients(text) }} value={ingredients}></TextInput>
+            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setIngredients(text.split('\n')) }} value={ingredients.join('\n')}></TextInput>
             <Text style={styles.title}>Steps</Text>
-            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setSteps(text) }} value={steps}></TextInput>
+            <TextInput style={styles.textBox} multiline scrollEnabled={false} onChangeText={(text) => { setSteps(text.split('\n')) }} value={steps.join('\n')}></TextInput>
         </View>
     )
 }
