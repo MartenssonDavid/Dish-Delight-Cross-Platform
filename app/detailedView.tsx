@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native'
 import { useState, useEffect, useContext } from 'react'
-import { useNavigation, useLocalSearchParams, useRouter } from 'expo-router'
+import { useNavigation, useLocalSearchParams, useRouter, Link } from 'expo-router'
 import { NewEditShow } from '@/components/NewEditShow'
 import Header from '@/components/Header'
 import { SignOutButton } from '@/components/SignOutButton'
@@ -96,7 +96,9 @@ export default function detailedView(props: any) {
                 <Text>Delete</Text>
             </Pressable>
             <Pressable style = {styles.addButton}  onPress={ () => addRecipe(recipeName,ingredients,steps)}>
+
                 <Text>Edit</Text>
+
             </Pressable>
             </View>
         </View>
@@ -113,15 +115,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#9DC183",
     },
     deleteButton:{
+
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: 1,
-        left: 1,
+        bottom: 10,
+        left: 10,
         backgroundColor: "#4F7942",
         padding: 15,
-        borderBottomColor: "#4b5320",
-        borderBottomWidth: 3,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: "#4b5320",
+        borderBottomWidth: 5,
         borderRadius: 40,
         width: 44,
         height: 44,
@@ -130,12 +135,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: 1,
-        right: 1,
+        bottom: 10,
+        right: 10,
         backgroundColor: "#4F7942",
         padding: 15,
-        borderBottomColor: "#4b5320",
-        borderBottomWidth: 3,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: "#4b5320",
+        borderBottomWidth: 5,
         borderRadius: 40,
         width: 44,
         height: 44,

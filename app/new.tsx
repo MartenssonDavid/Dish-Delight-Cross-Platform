@@ -37,12 +37,14 @@ export default function New(props: any) {
     const [recipeName, setRecipeName] = useState<string[]>([])
     const [ingredients, setIngredients] = useState<string[]>([])
     const [steps, setSteps] = useState<string[]>([])
+    const [tags, setTags] = useState<string[]>([])
     // Default to display default image
     const [image,setImage] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
     // Default to upload default image
     const [imageLink, setImageLink] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
 
-    // Image picker from library on phone
+
+    // Image picker from library on phone or files on desktop
     const imagePick = async ()=>{
         // Access image library on device
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -52,7 +54,7 @@ export default function New(props: any) {
             aspect: [3,4],
             quality: .5
         })
-        // If the upload is not cancled, create URI
+        // If not cancled, create URI
         if(!result.canceled){
             setImage(result.assets[0].uri)
             // When image set, run upload function
@@ -80,7 +82,7 @@ export default function New(props: any) {
             (error)=>{
                 console.log("error", error)
             },
-        // On complete, get url
+        // On complete, get url to store in actual recipe
             ()=>{
                 getDownloadURL(uploadOperation.snapshot.ref).then(async (downloadURL) => {
                     console.log("FileURL:", downloadURL)
@@ -111,6 +113,7 @@ export default function New(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
+            headerBackTitleVisible: false,
             headerTitle: () => <Header/>,
             headerRight: () => <SignOutButton />,
             
@@ -137,7 +140,7 @@ export default function New(props: any) {
                 imagePick = {imagePick}
             />
             <Pressable style={styles.addButton} onPress={ () => addRecipe(recipeName,ingredients,steps,imageLink)}  >
-                <Text style={styles.addButtonText}> + </Text>
+                <Text style={styles.addButtonText}>+</Text>
             </Pressable>
         </View>
     )
@@ -157,8 +160,10 @@ const styles = StyleSheet.create({
         right: 10,
         backgroundColor: "#4F7942",
         padding: 15,
-        borderBottomColor: "#4b5320",
-        borderBottomWidth: 3,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: "#4b5320",
+        borderBottomWidth: 5,
         borderRadius: 40,
         width: 44,
         height: 44,

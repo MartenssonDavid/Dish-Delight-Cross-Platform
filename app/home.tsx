@@ -18,6 +18,7 @@ export default function Home(props: any) {
     const auth = useContext(AuthContext)
     const db = useContext(DBContext)
     const navigation = useNavigation()
+    
 
     // Array of data items
     const [data,setData] = useState([])
@@ -42,7 +43,7 @@ export default function Home(props: any) {
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
-            ScreenStackHeaderLeftView : false,
+            headerBackTitleVisible: false,
             headerRight: () => <SignOutButton />,
             headerTitle: () => <Header/>,
 
