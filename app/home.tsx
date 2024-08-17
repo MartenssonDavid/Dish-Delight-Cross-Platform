@@ -37,6 +37,14 @@ export default function Home(props: any) {
         }   
     },[data, auth, search])
 
+    useEffect(() => {
+        if (search) {
+            searchData();
+        } else {
+            fetchData();
+        }
+    }, [search]);
+
 
 
     // Header
@@ -65,6 +73,7 @@ export default function Home(props: any) {
                 item.id = doc.id
                 recipes.push(item)
             })
+
             setData(recipes)
 
         })
@@ -75,7 +84,9 @@ export default function Home(props: any) {
     // Search 
         const searchData = async () => {
             const  path = `user/${ auth.currentUser.uid}/recipes`
-            const q = query(collection (db, path), where("recipeName", "==" ,search) )
+            const prefix = search
+            const q = query(collection (db, path), where("recipeName", ">=", prefix),
+            where("recipeName", "<=", prefix + '\uf8ff') )
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 let recipes: any = []
                 querySnapshot.forEach((doc)=>{

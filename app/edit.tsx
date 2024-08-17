@@ -14,7 +14,7 @@ import { imageDBContext } from "@/context/imageDbContext"
 
 
 
-export default function New(props: any) {
+export default function Edit(props: any) {
     const router = useRouter()
     // Auth context, get current user
     const auth = useContext(AuthContext)
@@ -34,15 +34,15 @@ export default function New(props: any) {
 
 
     // States for input of data
-    const [recipeName, setRecipeName] = useState<string[]>([])
+    const [recipeName, setRecipeName] = useState<string>("")
     const [ingredients, setIngredients] = useState<string[]>([])
     const [steps, setSteps] = useState<string[]>([])
     const [tags, setTags] = useState<string[]>([])
     const { id } = params
     // Default to display default image
-    const [image,setImage] = useState('')
+    const [image,setImage] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
     // Default to upload default image
-    const [imageLink, setImageLink] = useState('')
+    const [imageLink, setImageLink] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
 
      // Header
      useEffect(() => {
@@ -127,7 +127,7 @@ export default function New(props: any) {
     }
 
     // Update, move to edit
-    const addRecipe = async (recipeName: string[], ingredients: string[], steps: string[],imageLink: string) =>{
+    const updateRecipe = async (recipeName: string, ingredients: string[], steps: string[],imageLink: string) =>{
         console.log("add")
         const data ={
             recipeName: recipeName,
@@ -171,11 +171,12 @@ export default function New(props: any) {
                 image={image}
                 setImage={setImage}
                 imagePick = {imagePick}
+                editable={true}
             />
             <Pressable style={styles.deleteButton} onPress={()=> deleteDocument(id as string)}>
                 <Text>Delete</Text>
             </Pressable>
-            <Pressable style={styles.addButton} onPress={ () => addRecipe(recipeName,ingredients,steps,imageLink)}  >
+            <Pressable style={styles.addButton} onPress={ () => updateRecipe(recipeName,ingredients,steps,imageLink)}  >
                 <Text style={styles.addButtonText}>+</Text>
             </Pressable>
         </View>

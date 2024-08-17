@@ -34,7 +34,7 @@ export default function New(props: any) {
 
 
     // States for input of data
-    const [recipeName, setRecipeName] = useState<string[]>([])
+    const [recipeName, setRecipeName] = useState<string>("")
     const [ingredients, setIngredients] = useState<string[]>([])
     const [steps, setSteps] = useState<string[]>([])
     const [tags, setTags] = useState<string[]>([])
@@ -93,7 +93,7 @@ export default function New(props: any) {
     }
 
     // Add data to db, using URL from image
-    const addRecipe = async (recipeName: string[], ingredients: string[], steps: string[], imageLink: string) =>{
+    const addRecipe = async (recipeName: string, ingredients: string[], steps: string[], imageLink: string) =>{
 
         // Get resulring uri from 
         const data ={
@@ -138,6 +138,7 @@ export default function New(props: any) {
                 image={image}
                 setImage={setImage}
                 imagePick = {imagePick}
+                editable = {true}
             />
             <Pressable style={styles.addButton} onPress={ () => addRecipe(recipeName,ingredients,steps,imageLink)}  >
                 <Text style={styles.addButtonText}>+</Text>

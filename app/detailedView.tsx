@@ -11,10 +11,10 @@ import { doc, getDoc, deleteDoc, setDoc, collection, documentId } from 'firebase
 
 export default function detailedView(props: any) {
     // Inputs
-    const [recipeName, setRecipeName] = useState<string[]>([])
+    const [recipeName, setRecipeName] = useState<string>("")
     const [ingredients, setIngredients] = useState<string[]>([])
     const [steps, setSteps] = useState<string[]>([])
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('https://firebasestorage.googleapis.com/v0/b/dish-delight-cross-platform.appspot.com/o/recipeImages%2FDefaultImage?alt=media&token=4cf41c17-4d2b-4d54-9dfd-eb6859215d17')
 
     const router = useRouter()
     const navigation = useNavigation()
@@ -58,7 +58,7 @@ export default function detailedView(props: any) {
         navigation.goBack()
     }
     // Update, move to edit
-    const addRecipe = async (recipeName: string[], ingredients: string[], steps: string[]) =>{
+    const addRecipe = async (recipeName: string, ingredients: string[], steps: string[]) =>{
         console.log("add")
         const data ={
             recipeName: recipeName,
@@ -74,7 +74,19 @@ export default function detailedView(props: any) {
 
     // Empty function to fill imagePick, not the best solution
     const filler =() =>{}
-
+    
+    const navigateToEdit = () => {
+        router.push({
+            pathname: '/edit',
+            params: {
+                id: id,
+                recipeName: recipeName,
+                ingredients: ingredients,
+                steps: steps,
+                image: image
+            }
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -88,17 +100,16 @@ export default function detailedView(props: any) {
                 image={image}
                 setImage={setImage}
                 // Figure out better way to solve this, imagePick not needed here
-                imagePick={filler}>
+                imagePick={filler}
+                editable={false}
+                >
 
             </NewEditShow>
             <View>
-            <Pressable style={styles.deleteButton} onPress={()=> deleteDocument(id as string)}>
-                <Text>Delete</Text>
-            </Pressable>
-            <Pressable style = {styles.addButton}  onPress={ () => addRecipe(recipeName,ingredients,steps)}>
-
+            <Pressable style = {styles.addButton}  onPress={navigateToEdit}>
+            <Link href = {{ pathname :"/detailedView", params: {id: props.id} }} style={styles.link}>
                 <Text>Edit</Text>
-
+            </Link>
             </Pressable>
             </View>
         </View>
@@ -146,6 +157,9 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         width: 44,
         height: 44,
+    },
+    link: {
+        flex: 1
     },
 
 })
